@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.sql.In;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
 @SpringBootApplication
@@ -40,10 +41,10 @@ class CustomerGraphqlController {
 
 }
 
-interface CustomerRepository extends ReactiveCrudRepository<Customer, Integer> {
+record Customer (@JsonProperty("id") @Id Integer id, @JsonProperty("name") String name) {
 
 }
 
-record Customer (@JsonProperty("id") @Id Integer id, @JsonProperty("name") String name) {
+interface CustomerRepository extends ReactiveCrudRepository<Customer, Integer> {
 
 }
