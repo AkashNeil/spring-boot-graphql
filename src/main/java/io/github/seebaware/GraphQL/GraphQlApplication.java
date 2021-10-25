@@ -24,27 +24,3 @@ public class GraphQlApplication {
 	}
 
 }
-
-@Controller
-class CustomerGraphqlController {
-
-	private final CustomerRepository repository;
-
-	public CustomerGraphqlController(CustomerRepository repository) {
-		this.repository = repository;
-	}
-
-	@SchemaMapping(typeName = "Query", field = "Customers")
-	Flux<Customer> customers () {
-		return this.repository.findAll();
-	}
-
-}
-
-record Customer (@JsonProperty("id") @Id Integer id, @JsonProperty("name") String name) {
-
-}
-
-interface CustomerRepository extends ReactiveCrudRepository<Customer, Integer> {
-
-}
