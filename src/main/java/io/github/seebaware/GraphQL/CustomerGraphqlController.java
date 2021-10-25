@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 @Controller
 class CustomerGraphqlController {
@@ -41,8 +43,19 @@ class CustomerGraphqlController {
     }
 
     @SubscriptionMapping
-    Flux <CustomerEvent> customerEvents () {
+    Flux <CustomerEvent> customerEvents (@Argument Integer customerId) {
+        return this.repository.findById(customerId)
+            .flatMapMany(customer -> {
 
+                var stream = Stream.generate(
+                        () -> new CustomerEvent(customer, Math.random() > .5 ? CustomerEventType.DELETED : CustomerEventType.UPDATED)
+                );
+
+                return Flux.fromStream(stream);
+
+            })
+            .delayElements(Duration.ofSeconds(1))
+            .take(10);
     }
 
 }

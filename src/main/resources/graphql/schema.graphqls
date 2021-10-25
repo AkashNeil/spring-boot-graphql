@@ -19,7 +19,7 @@ type Mutation {
 }
 
 type Subscription {
-    customerEvents (id : ID) : CustomerEvent
+    customerEvents (customerId : ID) : CustomerEvent
 }
 
 type CustomerEvent {
