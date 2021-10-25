@@ -5,6 +5,8 @@ import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 
+import java.util.ArrayList;
+
 @Controller
 class CustomerGraphqlController {
 
@@ -14,7 +16,15 @@ class CustomerGraphqlController {
         this.repository = repository;
     }
 
-    // @SchemaMapping(typeName = "Query", field = "Customers")
+    @SchemaMapping(typeName = "Customer")
+    Flux<Order> orders (Customer customer) {
+        var orders = new ArrayList<Order>();
+        for (var orderId = 1; orderId <= (Math.random() * 100); orderId++) {
+            orders.add(new Order(orderId, customer.id()));
+        }
+        return Flux.fromIterable(orders);
+    }
+
     @QueryMapping
     Flux<Customer> customers () {
         return this.repository.findAll();
