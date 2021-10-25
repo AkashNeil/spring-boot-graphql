@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import org.springframework.graphql.data.method.annotation.SchemaMapping;
+import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Flux;
 
 @SpringBootApplication
 public class GraphQlApplication {
@@ -17,6 +20,22 @@ public class GraphQlApplication {
 		// Customer customer = new Customer(1, "Jack");
 
 
+	}
+
+}
+
+@Controller
+class CustomerGraphqlController {
+
+	private final CustomerRepository repository;
+
+	public CustomerGraphqlController(CustomerRepository repository) {
+		this.repository = repository;
+	}
+
+	@SchemaMapping(typeName = "Query", field = "Customers")
+	Flux<Customer> customers () {
+		return this.repository.findAll();
 	}
 
 }
