@@ -8,3 +8,15 @@
 
 1. Run the application
 2. Go to the GraphQL console : http://localhost:8080/graphiql?path=/graphql
+
+'''
+{
+customers {
+id
+name
+orders {
+id
+}
+}
+}
+'''
