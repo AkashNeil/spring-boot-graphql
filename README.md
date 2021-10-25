@@ -9,14 +9,29 @@
 1. Run the application
 2. Go to the GraphQL console : http://localhost:8080/graphiql?path=/graphql
 
-'''
+Try out the following queries and see if it works :
+
+```
 {
-customers {
-id
-name
-orders {
-id
+    customers {
+        id
+        name
+    }
 }
+```
+
+```
+{
+  customersByName (name:"Jack") {
+    id, name
+  }
 }
+```
+
+```
+mutation {
+  addCustomer(name:"Bob"){
+    id, name
+  }
 }
-'''
+```
