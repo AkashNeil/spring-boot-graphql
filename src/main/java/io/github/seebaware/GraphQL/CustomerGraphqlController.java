@@ -1,9 +1,6 @@
 package io.github.seebaware.GraphQL;
 
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
+import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -41,6 +38,11 @@ class CustomerGraphqlController {
     @MutationMapping
     Mono <Customer> addCustomer(@Argument String name) {
         return this.repository.save(new Customer(null, name));
+    }
+
+    @SubscriptionMapping
+    Flux <CustomerEvent> customerEvents () {
+
     }
 
 }
