@@ -17,9 +17,7 @@ public class GraphQlApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GraphQlApplication.class, args);
-
-		// Customer customer = new Customer(1, "Jack");
-
+		
 
 	}
 
